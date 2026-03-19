@@ -1,10 +1,15 @@
 cv:
   name: Dongxin (Betty) Guo
-  label: AI Researcher & COO
+  label: AI Researcher | COO @ Stellaris AI | Partner @ Brain Investing
   email: bettyguo@connect.hku.hk
   location: Hong Kong
+  website: https://bettyguo.github.io
   image: ""
-  summary: PhD candidate at HKU studying the fundamental limits of AI systems. COO at Stellaris AI. Partner at Brain Investing Limited.
+  summary: >
+    I study the fundamental limits of AI systems — when they fail, how to verify their reasoning,
+    and how to coordinate multiple AI agents without manipulation. Then I build the infrastructure
+    to deploy them at scale. My work spans LLM foundations, multi-agent systems, retrieval-augmented
+    generation, AI safety, and statistical learning theory.
 
   social_networks:
     - network: GitHub
@@ -20,15 +25,18 @@ cv:
         location: Hong Kong
         url: https://www.hku.hk/
         area: Computer Science
-        studyType: Doctor of Philosophy - PhD
+        studyType: Ph.D.
         start_date: 2017
         end_date: 2026
+        highlights:
+          - "Advisor: Prof. Siu-Ming Yiu"
+          - "Research: LLM Theory, Multi-Agent Systems, RAG, AI Safety, Learning Theory"
 
       - institution: The University of Hong Kong
         location: Hong Kong
         url: https://www.hku.hk/
         area: Computer Science (Financial Computing Stream)
-        studyType: Master's Degree
+        studyType: M.Sc.
         start_date: 2015
         end_date: 2017
 
@@ -36,21 +44,35 @@ cv:
       - company: Stellaris AI
         position: Chief Operation Officer
         location: Hong Kong SAR
+        url: https://www.stellaris-ai.com/
         start_date: 2023-06-01
         end_date: ""
-        summary: LLM Pre-training, fine-tuning and infrastructure management.
+        summary: Leading LLM infrastructure and operations for a native-safe, general-purpose LLM company.
+        highlights:
+          - "LLM pre-training, fine-tuning, and inference infrastructure management"
+          - "Overseeing development of SGPT series models"
+          - "Building scalable ML pipelines for production deployment"
 
       - company: Brain Investing Limited
         position: Partner, AI Quantitative Trading
         location: Hong Kong SAR
+        url: https://www.brainvestai.com/
         start_date: 2023-01-01
         end_date: ""
+        summary: Leading AI-driven investment strategies and LLM-powered portfolio management.
+        highlights:
+          - "Spearheading Athena™ — Hong Kong's first LLM-powered portfolio management platform"
+          - "AI quantitative trading strategy development and risk management"
 
       - company: Brain Investing Limited
         position: Managing Director, AI Quantitative Trading
         location: Hong Kong SAR
+        url: https://www.brainvestai.com/
         start_date: 2020-10-01
         end_date: 2022-12-31
+        highlights:
+          - "Led AI/ML team for quantitative trading systems"
+          - "Managed high-performing teams and shipped production trading systems"
 
       - company: Brain Investing Limited
         position: Director, Quantitative Trading Researcher
@@ -70,50 +92,51 @@ cv:
         start_date: 2015-08-01
         end_date: 2017-05-31
 
-    Awards:
-      - title: CBS Prize for Distinguished Postgraduate Students
-        date: 2014-01-01
-        awarder: Department of Chinese and Bilingual Studies, The Hong Kong Polytechnic University
+    Skills:
+      - name: Research
+        level: Expert
+        icon: fa-solid fa-flask
+        keywords: "LLM Theory, Multi-Agent Systems, Retrieval-Augmented Generation, AI Safety & Alignment, Statistical Learning Theory, Mechanism Design"
 
-      - title: Merit Certificate in Chinese Language and Culture Voluntary Tutoring Programme
-        date: 2012-12-01
-        awarder: Department of Chinese and Bilingual Studies, The Hong Kong Polytechnic University
+      - name: Engineering
+        level: Expert
+        icon: fa-solid fa-code
+        keywords: "Python, PyTorch, LLM Pre-training & Fine-tuning, Distributed Systems, ML Infrastructure, Quantitative Trading Systems"
 
-      - title: First Class Scholarship
-        date: 2010-11-01
-        awarder: Shandong University
-        summary: Top 5% students in the department
-
-      - title: Excellent performer at Cross-Strait Youth Prayer Meeting for 2010 Yushu Earthquake
-        date: 2010-06-01
-        awarder: Student Union of I-SHOU University
-
-      - title: Awards of Merit in the 19th Times Young Creative Awards
-        date: 2010-01-01
-
-      - title: First Class Scholarship
-        date: 2009-11-01
-        awarder: Shandong University
-        summary: Top 5% students in the department
-
-      - title: Excellent University Association President
-        date: 2009-01-01
-
-      - title: Nomination Award in the 7th Academy Award
-        date: 2009-01-01
+      - name: Leadership
+        level: Expert
+        icon: fa-solid fa-users
+        keywords: "Team Management, Product Strategy, Operations, Regulatory Compliance, Investor Relations"
 
     Certificates:
-      - name: DEC x The University of Hong Kong AI Literacy for Research Postgraduates
+      - name: DEC x HKU AI Literacy for Research Postgraduates
         date: 2026-03-01
         issuer: Digital Education Council
         icon: fa-solid fa-certificate
 
+    Awards:
+      - title: CBS Prize for Distinguished Postgraduate Students
+        date: 2014-01-01
+        awarder: The Hong Kong Polytechnic University
+
+      - title: First Class Scholarship (2x recipient)
+        date: 2010-11-01
+        awarder: Shandong University
+        summary: Top 5% students in the department
+
+      - title: Awards of Merit — 19th Times Young Creative Awards
+        date: 2010-01-01
+
+      - title: Excellent University Association President
+        date: 2009-01-01
+        awarder: Shandong University
+
     Languages:
-      - name: Chinese
-        summary: "Native or bilingual proficiency"
+      - name: Chinese (Mandarin)
+        summary: "Native"
 
       - name: English
         summary: "Full professional proficiency"
 
       - name: Cantonese
-        summary: "Limited working proficiency"
+        summary: "Working proficiency"
