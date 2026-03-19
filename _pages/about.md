@@ -29,5 +29,3 @@ My research lies at the intersection of **theory and practice of large language 
 - **Statistical Learning Theory**: tight minimax rates, PAC/sample complexity, preference learning beyond Bradley-Terry, and synthetic data learnability.
 
 I am broadly interested in building the theoretical scaffolding that makes large-scale AI systems more reliable, robust, and trustworthy.
-
-**I am on the 2026 job market.** I am open to research positions in academia and industry. Please feel free to reach out!
