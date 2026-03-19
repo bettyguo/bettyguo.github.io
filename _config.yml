@@ -48,7 +48,7 @@ og_image: # default open graph image
 github_username: bettyguo
 gitlab_username:
 x_username:
-linkedin_username:
+linkedin_username: bettyguo
 scholar_userid: Zz_d_8UAAAAJ
 semanticscholar_id:
 whatsapp_number:
@@ -298,7 +298,7 @@ enable_masonry: true
 enable_math: true
 enable_tooltips: false
 enable_darkmode: true
-enable_navbar_social: false
+enable_navbar_social: true
 enable_project_categories: true
 enable_medium_zoom: true
 enable_progressbar: true

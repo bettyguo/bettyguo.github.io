@@ -2,30 +2,35 @@
 layout: about
 title: about
 permalink: /
-subtitle:
+subtitle: >
+  PhD Candidate @ <a href='https://www.cs.hku.hk/'>HKU Computer Science</a> &middot;
+  COO @ <a href='https://www.stellaris-ai.com/'>Stellaris AI</a> &middot;
+  Partner @ <a href='https://www.brainvestai.com/'>Brain Investing</a>
 
 profile:
   align: right
   image: prof_pic.jpg
-  image_circular: false # crops the image to make it circular
+  image_circular: true
   more_info: >
-    <p>Department of Computer Science</p>
-    <p>The University of Hong Kong</p>
-    <p>Pokfulam, Hong Kong</p>
+    <p style="text-align: center;">
+    <a href="mailto:bettyguo@connect.hku.hk">bettyguo@connect.hku.hk</a>
+    </p>
 
-news: true # includes a list of news items
-selected_papers: true # includes a list of papers marked as "selected={true}"
-social: true # includes social icons at the bottom of the page
+news: true
+selected_papers: true
+social: true
 ---
 
-I am a final-year PhD candidate in the [Department of Computer Science](https://www.cs.hku.hk/) at [The University of Hong Kong](https://www.hku.hk/), advised by [Prof. Siu-Ming Yiu](https://www.cs.hku.hk/index.php/people/academic-staff/smyiu). I also serve as Partner at [Brain Investing Limited](https://www.brainvestai.com/) and Chief Operation Officer at [Stellaris AI](https://www.stellaris-ai.com/).
+I am a final-year PhD candidate in the [Department of Computer Science](https://www.cs.hku.hk/) at [The University of Hong Kong](https://www.hku.hk/), advised by [Prof. Siu-Ming Yiu](https://www.cs.hku.hk/index.php/people/academic-staff/smyiu).
 
-My research lies at the intersection of **theory and practice of large language models**. I develop rigorous theoretical foundations—tight minimax bounds, impossibility results paired with constructive algorithms, PAC analysis, and causal frameworks—for problems that matter in modern AI systems. My work spans five interconnected areas:
+I study the **fundamental limits of AI systems** — when they fail, how to verify their reasoning, and how to coordinate multiple AI agents without manipulation. Then I build the infrastructure to deploy them at scale.
 
-- **Foundations of Large Language Models**: expressivity (descriptive complexity of transformers), chain-of-thought error and stopping theory, knowledge editing bounds, distillation complexity, and LoRA convergence.
-- **Game-Theoretic Multi-Agent Systems**: mechanism design for LLM agents with ε-IC guarantees, strategic manipulation detection, coalition formation, and VCG impossibility results.
-- **Retrieval-Augmented Generation**: verification efficiency, adaptive retrieval, causal attribution via do-calculus for RAG, and knowledge graph poisoning defense.
-- **AI Safety and Alignment**: reward hacking detection, scalable oversight theory, XAI regulatory critique, and model collapse characterization.
-- **Statistical Learning Theory**: tight minimax rates, PAC/sample complexity, preference learning beyond Bradley-Terry, and synthetic data learnability.
+My research spans five interconnected areas at the intersection of **theory and practice of large language models**:
 
-I am broadly interested in building the theoretical scaffolding that makes large-scale AI systems more reliable, robust, and trustworthy.
+- **LLM Foundations** — expressivity and descriptive complexity of transformers, chain-of-thought error propagation, knowledge editing bounds, distillation complexity, and LoRA convergence.
+- **Multi-Agent Systems** — mechanism design with ε-IC guarantees, strategic manipulation detection, coalition formation, and VCG impossibility results.
+- **Retrieval-Augmented Generation** — verification efficiency, adaptive retrieval, causal attribution via do-calculus, and knowledge graph poisoning defense.
+- **AI Safety & Alignment** — reward hacking detection, scalable oversight theory, XAI regulatory critique, and model collapse characterization.
+- **Learning Theory** — tight minimax rates, PAC/sample complexity, preference learning beyond Bradley-Terry, and synthetic data learnability.
+
+On the industry side, I lead LLM infrastructure at [Stellaris AI](https://www.stellaris-ai.com/) and AI-driven quantitative trading systems at [Brain Investing](https://www.brainvestai.com/).
