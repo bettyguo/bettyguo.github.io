@@ -80,7 +80,7 @@ layout: default
               {% if cv.email %}
                 <tr>
                   <td class="p-1 pr-2 font-weight-bold"><b>Email</b></td>
-                  <td class="p-1 pl-2 font-weight-light">{{ cv.email }}</td>
+                  <td class="p-1 pl-2 font-weight-light"><img src="{{ '/assets/img/email.svg' | relative_url }}" alt="email" style="height: 1.1em; vertical-align: middle;" /></td>
                 </tr>
               {% endif %}
               {% if cv.phone %}
@@ -220,7 +220,7 @@ layout: default
               {% if basics.email %}
                 <tr>
                   <td class="p-1 pr-2 font-weight-bold"><b>Email</b></td>
-                  <td class="p-1 pl-2 font-weight-light">{{ basics.email }}</td>
+                  <td class="p-1 pl-2 font-weight-light"><img src="{{ '/assets/img/email.svg' | relative_url }}" alt="email" style="height: 1.1em; vertical-align: middle;" /></td>
                 </tr>
               {% endif %}
               {% if basics.phone %}
