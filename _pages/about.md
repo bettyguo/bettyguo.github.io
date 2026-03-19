@@ -18,7 +18,7 @@ selected_papers: true # includes a list of papers marked as "selected={true}"
 social: true # includes social icons at the bottom of the page
 ---
 
-I am a final-year PhD candidate in the [Department of Computer Science](https://www.cs.hku.hk/) at [The University of Hong Kong](https://www.hku.hk/), advised by [Prof. Siu-Ming Yiu](https://www.cs.hku.hk/index.php/people/academic-staff/smyiu). I also serve as COO/Partner at [Brain Investing Limited](https://www.brainvestai.com/), a Hong Kong-based AI/fintech group.
+I am a final-year PhD candidate in the [Department of Computer Science](https://www.cs.hku.hk/) at [The University of Hong Kong](https://www.hku.hk/), advised by [Prof. Siu-Ming Yiu](https://www.cs.hku.hk/index.php/people/academic-staff/smyiu). I also serve as Partner at [Brain Investing Limited](https://www.brainvestai.com/) and Chief Operation Officer at [Stellaris AI](https://www.stellaris-ai.com/).
 
 My research lies at the intersection of **theory and practice of large language models**. I develop rigorous theoretical foundations—tight minimax bounds, impossibility results paired with constructive algorithms, PAC analysis, and causal frameworks—for problems that matter in modern AI systems. My work spans five interconnected areas:
 
