@@ -3,7 +3,7 @@ layout: page
 title: projects
 permalink: /projects/
 description: A collection of research projects.
-nav: true
+nav: false
 nav_order: 3
 display_categories: [LLM Theory, Multi-Agent Systems, RAG, AI Safety]
 horizontal: false
