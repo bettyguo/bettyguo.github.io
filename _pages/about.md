@@ -31,3 +31,14 @@ My research spans five interconnected areas at the intersection of **theory and 
 - **Learning Theory** — tight minimax rates, PAC/sample complexity, preference learning beyond Bradley-Terry, and synthetic data learnability.
 
 On the industry side, I lead LLM infrastructure at [Stellaris AI](https://www.stellaris-ai.com/) and AI-driven quantitative trading systems at [Brain Investing](https://www.brainvestai.com/).
+
+## Current Projects
+
+I am actively working on the following research directions. If any of these align with your interests, I'd love to collaborate — feel free to reach out.
+
+- **Formal expressivity characterization of transformer architectures** — Developing logic-based frameworks to precisely describe what modern attention mechanisms can and cannot compute.
+- **Fault tolerance and consensus in multi-agent LLM systems** — Designing protocols that keep multi-agent AI systems reliable when individual agents fail or behave unpredictably.
+- **Incentive-compatible mechanism design for LLM agents** — Investigating how to coordinate self-interested AI agents in strategic settings while preserving truthfulness guarantees.
+- **Verification and trustworthiness of retrieval-augmented generation** — Building efficient methods to detect when retrieved evidence conflicts with generated answers and ensure factual consistency.
+- **Adaptive and reasoning-aware information retrieval** — Exploring how retrieval systems can dynamically adjust their strategies based on query complexity and reasoning requirements.
+- **Fair and efficient serving of large language models at scale** — Studying resource allocation and scheduling strategies for multi-tenant LLM deployment under fairness constraints.
