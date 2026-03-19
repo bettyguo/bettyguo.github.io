@@ -264,15 +264,16 @@ enable_publication_thumbnails: true
 # -----------------------------------------------------------------------------
 
 jekyll-archives:
-  enabled: [year, tags, categories]
-  layouts:
-    year: archive-year
-    tag: archive-tag
-    category: archive-category
-  permalinks:
-    year: "/blog/:year/"
-    tag: "/blog/tag/:name/"
-    category: "/blog/category/:name/"
+  posts:
+    enabled: [year, tags, categories]
+    layouts:
+      year: archive-year
+      tag: archive-tag
+      category: archive-category
+    permalinks:
+      year: "/blog/:year/"
+      tags: "/blog/tag/:name/"
+      categories: "/blog/category/:name/"
 
 display_tags: ["LLM Theory", "Multi-Agent Systems", "RAG", "AI Safety", "Learning Theory"]
 
