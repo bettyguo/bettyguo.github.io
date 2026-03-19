@@ -13,7 +13,7 @@ profile:
   image_circular: true
   more_info: >
     <p style="text-align: center;">
-    <a href="mailto:bettyguo@connect.hku.hk">bettyguo@connect.hku.hk</a>
+    <img src="/assets/img/email.svg" alt="email" style="height: 1em;" />
     </p>
 
 news: true
