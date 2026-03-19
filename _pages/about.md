@@ -34,6 +34,8 @@ On the industry side, I lead LLM infrastructure at [Stellaris AI](https://www.st
 
 ## Current Projects
 
+I am actively working on the following research projects. If any of these align with your interests, I'd love to collaborate — feel free to reach out.
+
 - **Logical characterization of transformer expressivity** — Connecting the computational power of softmax attention to formal logic hierarchies, establishing what classes of problems transformers can provably solve or fail on.
 - **Crash recovery for multi-agent LLM workflows** — Building a fault-tolerant runtime that allows multi-agent LLM pipelines to survive agent crashes and resume execution without losing intermediate reasoning state.
 - **Strategy-proof coordination of LLM agents** — Designing auction- and voting-based protocols for settings where multiple LLM agents have competing objectives, with formal guarantees on when manipulation can be prevented.
