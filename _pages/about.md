@@ -12,8 +12,8 @@ profile:
   image: prof_pic.jpg
   image_circular: true
   more_info: >
-    <p style="text-align: center;">
-    <img src="/assets/img/email.svg" alt="email" style="height: 1em;" />
+    <p style="text-align: center; margin-top: 0.5rem;">
+    <img src="/assets/img/email.svg" alt="email" style="height: 1.1em; display: inline-block;" />
     </p>
 
 news: true
