@@ -12,6 +12,7 @@ description: > # the ">" converts newlines to spaces
 footer_text: >
 keywords: llm-theory, multi-agent-systems, retrieval-augmented-generation, ai-safety, learning-theory, machine-learning
 
+icon: prof_pic.ico
 url: https://bettyguo.github.io
 baseurl: # leave empty for user site
 last_updated: true
