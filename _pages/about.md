@@ -34,11 +34,9 @@ On the industry side, I lead LLM infrastructure at [Stellaris AI](https://www.st
 
 ## Current Projects
 
-I am actively working on the following research directions. If any of these align with your interests, I'd love to collaborate — feel free to reach out.
-
-- **Formal expressivity characterization of transformer architectures** — Developing logic-based frameworks to precisely describe what modern attention mechanisms can and cannot compute.
-- **Fault tolerance and consensus in multi-agent LLM systems** — Designing protocols that keep multi-agent AI systems reliable when individual agents fail or behave unpredictably.
-- **Incentive-compatible mechanism design for LLM agents** — Investigating how to coordinate self-interested AI agents in strategic settings while preserving truthfulness guarantees.
-- **Verification and trustworthiness of retrieval-augmented generation** — Building efficient methods to detect when retrieved evidence conflicts with generated answers and ensure factual consistency.
-- **Adaptive and reasoning-aware information retrieval** — Exploring how retrieval systems can dynamically adjust their strategies based on query complexity and reasoning requirements.
-- **Fair and efficient serving of large language models at scale** — Studying resource allocation and scheduling strategies for multi-tenant LLM deployment under fairness constraints.
+- **Logical characterization of transformer expressivity** — Connecting the computational power of softmax attention to formal logic hierarchies, establishing what classes of problems transformers can provably solve or fail on.
+- **Crash recovery for multi-agent LLM workflows** — Building a fault-tolerant runtime that allows multi-agent LLM pipelines to survive agent crashes and resume execution without losing intermediate reasoning state.
+- **Strategy-proof coordination of LLM agents** — Designing auction- and voting-based protocols for settings where multiple LLM agents have competing objectives, with formal guarantees on when manipulation can be prevented.
+- **Conflict detection in retrieval-augmented generation** — Developing a verification layer that identifies subtle contradictions between retrieved documents and LLM-generated answers before they reach the end user.
+- **Query-adaptive retrieval for reasoning tasks** — Building a retrieval system that decides when, what, and how much to retrieve based on the reasoning complexity of the input query, rather than retrieving uniformly.
+- **Multi-tenant LLM serving under fairness constraints** — Designing scheduling and batching algorithms that guarantee quality-of-service fairness across users when serving shared LLM infrastructure.
