@@ -2,7 +2,7 @@
 layout: about
 title: about
 permalink: /
-subtitle: PhD Candidate, <a href='https://www.cs.hku.hk/'>Department of Computer Science</a>, <a href='https://www.hku.hk/'>The University of Hong Kong</a>
+subtitle:
 
 profile:
   align: right
