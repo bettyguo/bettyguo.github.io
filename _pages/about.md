@@ -12,9 +12,9 @@ profile:
   image: prof_pic.jpg
   image_circular: true
   more_info: >
-    <p style="text-align: center; margin-top: 0.5rem;">
-    <img src="/assets/img/email.svg" alt="email" style="height: 1.1em; display: inline-block;" />
-    </p>
+    <div style="text-align: center; margin-top: 0.5rem;">
+    <img src="/assets/img/email.svg" alt="email" style="height: 1.1em;" />
+    </div>
 
 news: true
 selected_papers: true
