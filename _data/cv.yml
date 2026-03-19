@@ -4,11 +4,7 @@ cv:
   email: bettyguo@connect.hku.hk
   location: Hong Kong
   image: ""
-  summary: >
-    I study the fundamental limits of AI systems — when they fail, how to verify their reasoning,
-    and how to coordinate multiple AI agents without manipulation. Then I build the infrastructure
-    to deploy them at scale. My work spans LLM foundations, multi-agent systems, retrieval-augmented
-    generation, AI safety, and statistical learning theory.
+  summary:
 
   social_networks:
     - network: GitHub
