@@ -1,7 +1,51 @@
 metadata:
-  last_updated: '2026-03-20'
+  last_updated: '2026-03-27'
 papers:
+  Zz_d_8UAAAAJ:2osOgNQ5qMEC:
+    citations: 0
+    title: 'OT-Route: Provably Load-Balanced MoE Routing via Optimal Transport'
+    year: '2026'
+  Zz_d_8UAAAAJ:9yKSN-GCB0IC:
+    citations: 0
+    title: When Do Early-Exit Networks Generalize? A PAC-Bayesian Theory of Adaptive Depth
+    year: '2026'
+  Zz_d_8UAAAAJ:IjCSPb-OGe4C:
+    citations: 0
+    title: 'Parameter-Efficient Neuroevolution for Diverse LLM Generation: Quality-Diversity Optimization via Prompt Embedding Evolution'
+    year: '2026'
+  Zz_d_8UAAAAJ:Tyk-4Ss8FVUC:
+    citations: 0
+    title: 'TrustKGRAG: Probabilistic Certified Robustness and Structural-Semantic Detection for Knowledge Graph Poisoning in RAG'
+    year: '2026'
+  Zz_d_8UAAAAJ:UeHWp8X0CEIC:
+    citations: 0
+    title: 'Geometric Metrics for MoE Specialization: From Fisher Information to Early Failure Detection'
+    year: '2026'
+  Zz_d_8UAAAAJ:W7OEmFMy1HYC:
+    citations: 0
+    title: 'KAMAS: Multi-Agent LLM Coordination with Provable Convergence for Knowledge-Driven SOC Automation'
+    year: '2026'
+  Zz_d_8UAAAAJ:Y0pCki6q_DkC:
+    citations: 0
+    title: Where Does Uncertainty Come From? Decomposing Prediction Confidence by Knowledge Source in RAG-KG Systems
+    year: '2026'
+  Zz_d_8UAAAAJ:YsMSGLbcyi4C:
+    citations: 0
+    title: Provably Mesh-Independent Neural Operator Preconditioning via Spectral Equivalence
+    year: '2026'
   Zz_d_8UAAAAJ:d1gkVwhDpl0C:
     citations: 0
     title: 'Predicting When LLMs Enhance Evolutionary Optimization: A Landscape-Aware Framework'
+    year: '2026'
+  Zz_d_8UAAAAJ:eQOLeE2rZwMC:
+    citations: 0
+    title: 'Conformalized Neural Operators: Physics-Informed Adaptive Prediction Bands for PDE Surrogates'
+    year: '2026'
+  Zz_d_8UAAAAJ:qjMakFHDy7sC:
+    citations: 0
+    title: Closing the Theory-Practice Gap in Spiking Transformers via Effective Dimension
+    year: '2026'
+  Zz_d_8UAAAAJ:zYLM7Y9cAGgC:
+    citations: 0
+    title: 'EvoPref: Multi-Objective Evolutionary Optimization Discovers Diverse LLM Alignments Beyond Gradient Descent'
     year: '2026'
