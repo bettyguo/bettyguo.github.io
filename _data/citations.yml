@@ -1,5 +1,5 @@
 metadata:
-  last_updated: '2026-03-27'
+  last_updated: '2026-04-03'
 papers:
   Zz_d_8UAAAAJ:2osOgNQ5qMEC:
     citations: 0
@@ -24,6 +24,10 @@ papers:
   Zz_d_8UAAAAJ:W7OEmFMy1HYC:
     citations: 0
     title: 'KAMAS: Multi-Agent LLM Coordination with Provable Convergence for Knowledge-Driven SOC Automation'
+    year: '2026'
+  Zz_d_8UAAAAJ:WF5omc3nYNoC:
+    citations: 0
+    title: 'SAGA: Workflow-Atomic Scheduling for AI Agent Inference on GPU Clusters'
     year: '2026'
   Zz_d_8UAAAAJ:Y0pCki6q_DkC:
     citations: 0
