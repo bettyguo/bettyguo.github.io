@@ -1,5 +1,5 @@
 metadata:
-  last_updated: '2026-04-03'
+  last_updated: '2026-04-10'
 papers:
   Zz_d_8UAAAAJ:2osOgNQ5qMEC:
     citations: 0
@@ -48,6 +48,10 @@ papers:
   Zz_d_8UAAAAJ:qjMakFHDy7sC:
     citations: 0
     title: Closing the Theory-Practice Gap in Spiking Transformers via Effective Dimension
+    year: '2026'
+  Zz_d_8UAAAAJ:ufrVoPGSRksC:
+    citations: 0
+    title: 'When to Retrieve During Reasoning: Adaptive Retrieval for Large Reasoning Models'
     year: '2026'
   Zz_d_8UAAAAJ:zYLM7Y9cAGgC:
     citations: 0
