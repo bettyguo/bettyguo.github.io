@@ -2,6 +2,6 @@
 permalink: /robots.txt
 ---
 User-agent: *
-Disallow:
+Disallow: /assets/html/horizon_simulator.html
 
 Sitemap: {{ site.baseurl | prepend: site.url }}/sitemap.xml
