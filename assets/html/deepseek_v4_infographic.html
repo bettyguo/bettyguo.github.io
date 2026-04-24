@@ -1,0 +1,1433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>DeepSeek V4 — A Technical Dossier</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,700;0,9..144,900;1,9..144,400&family=JetBrains+Mono:wght@300;400;500;700&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink:          #0a0e17;
+    --ink-2:        #111724;
+    --paper:        #f5efe4;
+    --paper-dim:    #e8dfd0;
+    --rule:         #1c2230;
+    --accent:       #3d6eff;     /* electric indigo */
+    --accent-soft:  #91a9ff;
+    --cyan:         #5ee2d5;
+    --amber:        #ffb347;
+    --crimson:      #ff5a5f;
+    --muted:        #7a8397;
+    --display: 'Fraunces', serif;
+    --mono: 'JetBrains Mono', monospace;
+    --sans: 'Manrope', system-ui, sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    background: var(--ink);
+    color: var(--paper);
+    font-family: var(--sans);
+    font-weight: 400;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  /* Grain overlay for texture */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.035;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+    mix-blend-mode: overlay;
+  }
+
+  .wrap {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 48px 40px 120px;
+  }
+
+  /* ============ TOP META ============ */
+  .meta-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    padding: 10px 0;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 56px;
+  }
+  .meta-bar .dot {
+    display: inline-block;
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--cyan);
+    margin-right: 8px;
+    animation: blink 2.2s ease-in-out infinite;
+  }
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  /* ============ HERO ============ */
+  .hero {
+    display: grid;
+    grid-template-columns: 7fr 5fr;
+    gap: 48px;
+    align-items: end;
+    margin-bottom: 96px;
+    position: relative;
+  }
+
+  .hero-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent-soft);
+    margin-bottom: 28px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .hero-label::after {
+    content: '';
+    height: 1px;
+    flex: 1;
+    background: linear-gradient(to right, var(--accent-soft), transparent);
+    max-width: 280px;
+  }
+
+  h1.hero-title {
+    font-family: var(--display);
+    font-weight: 300;
+    font-size: clamp(54px, 7.5vw, 116px);
+    line-height: 0.92;
+    letter-spacing: -0.03em;
+    margin-bottom: 24px;
+  }
+  h1.hero-title em {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--cyan);
+  }
+  h1.hero-title .v {
+    font-family: var(--mono);
+    font-weight: 300;
+    font-size: 0.55em;
+    vertical-align: super;
+    letter-spacing: 0.05em;
+    color: var(--accent-soft);
+  }
+
+  .hero-sub {
+    font-family: var(--display);
+    font-size: 22px;
+    font-weight: 300;
+    font-style: italic;
+    line-height: 1.35;
+    color: var(--paper-dim);
+    max-width: 620px;
+    margin-top: 20px;
+  }
+
+  .hero-stats {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2px;
+    border-left: 1px solid var(--rule);
+    padding-left: 28px;
+  }
+  .stat {
+    padding: 14px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .stat:last-child { border-bottom: none; }
+  .stat-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+  .stat-value {
+    font-family: var(--display);
+    font-size: 36px;
+    font-weight: 400;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+  }
+  .stat-value .unit {
+    font-family: var(--mono);
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--muted);
+    margin-left: 6px;
+    letter-spacing: 0.05em;
+  }
+
+  /* ============ SECTION HEADER ============ */
+  .section {
+    margin-bottom: 96px;
+    position: relative;
+  }
+  .sec-head {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 24px;
+    align-items: baseline;
+    padding-top: 20px;
+    border-top: 1px solid var(--rule);
+    margin-bottom: 40px;
+  }
+  .sec-num {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    color: var(--accent-soft);
+    padding-top: 14px;
+  }
+  .sec-title {
+    font-family: var(--display);
+    font-weight: 300;
+    font-size: 44px;
+    letter-spacing: -0.02em;
+    line-height: 1.05;
+  }
+  .sec-title em {
+    font-style: italic;
+    color: var(--cyan);
+    font-weight: 400;
+  }
+  .sec-kicker {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 10px;
+    grid-column: 2;
+  }
+
+  /* ============ I. ARCHITECTURE ============ */
+  .arch-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  .arch-card {
+    background: var(--ink-2);
+    border: 1px solid var(--rule);
+    padding: 28px 24px;
+    border-radius: 2px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.4s ease, border-color 0.4s ease;
+  }
+  .arch-card:hover {
+    border-color: var(--accent-soft);
+    transform: translateY(-2px);
+  }
+  .arch-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 40px; height: 2px;
+    background: var(--cyan);
+  }
+  .arch-card .tag {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    color: var(--cyan);
+    margin-bottom: 12px;
+  }
+  .arch-card h3 {
+    font-family: var(--display);
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 1.15;
+    margin-bottom: 12px;
+    letter-spacing: -0.01em;
+  }
+  .arch-card h3 em {
+    font-style: italic;
+    color: var(--accent-soft);
+  }
+  .arch-card p {
+    font-size: 13.5px;
+    color: var(--paper-dim);
+    line-height: 1.55;
+  }
+  .arch-card .metric {
+    margin-top: 18px;
+    padding-top: 14px;
+    border-top: 1px dashed var(--rule);
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+  }
+  .arch-card .metric strong {
+    color: var(--cyan);
+    font-weight: 500;
+  }
+
+  /* Visual attention diagram */
+  .attn-diagram {
+    margin-top: 40px;
+    background: var(--ink-2);
+    border: 1px solid var(--rule);
+    padding: 40px;
+    border-radius: 2px;
+  }
+  .attn-diagram-title {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 20px;
+  }
+
+  /* ============ II. EFFICIENCY ============ */
+  .eff-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+  }
+  .eff-chart {
+    background: var(--ink-2);
+    border: 1px solid var(--rule);
+    padding: 32px;
+    border-radius: 2px;
+  }
+  .eff-chart h4 {
+    font-family: var(--display);
+    font-size: 22px;
+    font-weight: 400;
+    margin-bottom: 4px;
+    letter-spacing: -0.01em;
+  }
+  .eff-chart .eff-sub {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 24px;
+  }
+
+  /* Custom bar comparison */
+  .bar-row {
+    display: grid;
+    grid-template-columns: 160px 1fr 110px;
+    gap: 16px;
+    align-items: center;
+    margin-bottom: 18px;
+    font-family: var(--mono);
+    font-size: 12px;
+  }
+  .bar-label {
+    color: var(--paper-dim);
+    letter-spacing: 0.02em;
+  }
+  .bar-track {
+    height: 22px;
+    background: transparent;
+    border-left: 1px solid var(--rule);
+    position: relative;
+  }
+  .bar-fill {
+    height: 100%;
+    position: relative;
+    transition: width 1.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  .bar-fill.v32 { background: linear-gradient(to right, #3f4a62, #5a6680); }
+  .bar-fill.v4pro { background: linear-gradient(to right, var(--accent), var(--accent-soft)); }
+  .bar-fill.v4flash { background: linear-gradient(to right, var(--cyan), #a8f2e8); }
+  .bar-value {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--paper);
+    text-align: right;
+  }
+  .bar-value .reduction {
+    display: block;
+    font-size: 10px;
+    color: var(--cyan);
+    margin-top: 2px;
+  }
+
+  /* ============ III. BENCHMARKS ============ */
+  .bench-wrap {
+    background: var(--ink-2);
+    border: 1px solid var(--rule);
+    padding: 36px 40px;
+    border-radius: 2px;
+  }
+  .bench-legend {
+    display: flex;
+    gap: 24px;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+    margin-bottom: 28px;
+    flex-wrap: wrap;
+  }
+  .legend-dot {
+    display: inline-block;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    margin-right: 6px;
+    vertical-align: middle;
+  }
+  .ld-ds  { background: var(--cyan); }
+  .ld-opus { background: #c9a878; }
+  .ld-gpt  { background: #78c995; }
+  .ld-gem  { background: #c978b8; }
+
+  .bench-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
+  .bench-block {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .bench-name {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    margin-bottom: 12px;
+    text-transform: uppercase;
+  }
+  .bench-bars {
+    display: flex;
+    align-items: flex-end;
+    gap: 6px;
+    height: 140px;
+    width: 100%;
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 2px;
+  }
+  .b-bar {
+    flex: 1;
+    position: relative;
+    border-radius: 1px 1px 0 0;
+    transition: transform 0.3s ease;
+  }
+  .b-bar:hover { transform: scaleY(1.03); }
+  .b-bar.ds   { background: linear-gradient(to top, var(--cyan), #a8f2e8); }
+  .b-bar.opus { background: linear-gradient(to top, #8f7a58, #c9a878); }
+  .b-bar.gpt  { background: linear-gradient(to top, #4f8f66, #78c995); }
+  .b-bar.gem  { background: linear-gradient(to top, #8f5880, #c978b8); }
+  .b-val {
+    position: absolute;
+    top: -18px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: var(--mono);
+    font-size: 9.5px;
+    color: var(--paper);
+    white-space: nowrap;
+  }
+  .b-bar.ds .b-val { color: var(--cyan); font-weight: 500; }
+
+  /* ============ IV. PRICING ============ */
+  .price-table {
+    background: var(--ink-2);
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .price-head {
+    display: grid;
+    grid-template-columns: 2.4fr 1fr 1fr 1fr 1fr;
+    padding: 16px 28px;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    border-bottom: 1px solid var(--rule);
+    background: var(--ink);
+  }
+  .price-head div { text-align: right; }
+  .price-head div:first-child { text-align: left; }
+
+  .price-row {
+    display: grid;
+    grid-template-columns: 2.4fr 1fr 1fr 1fr 1fr;
+    padding: 22px 28px;
+    border-bottom: 1px solid var(--rule);
+    align-items: center;
+    transition: background 0.3s ease;
+  }
+  .price-row:last-child { border-bottom: none; }
+  .price-row:hover { background: rgba(61, 110, 255, 0.05); }
+  .price-row.featured {
+    background: linear-gradient(90deg, rgba(94, 226, 213, 0.08), transparent 60%);
+    border-left: 2px solid var(--cyan);
+  }
+  .price-model {
+    font-family: var(--display);
+    font-size: 18px;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+  }
+  .price-model em {
+    font-style: italic;
+    color: var(--cyan);
+  }
+  .price-model .params {
+    display: block;
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-top: 2px;
+    font-style: normal;
+  }
+  .price-cell {
+    font-family: var(--mono);
+    font-size: 15px;
+    text-align: right;
+    color: var(--paper);
+    font-weight: 500;
+  }
+  .price-cell.cheap { color: var(--cyan); }
+  .price-cell.expensive { color: var(--amber); }
+  .price-cell .cur {
+    font-size: 11px;
+    color: var(--muted);
+    margin-right: 2px;
+  }
+
+  /* ============ FOOTNOTE / CRITIQUE ============ */
+  .critique {
+    margin-top: 64px;
+    padding: 40px;
+    border: 1px dashed var(--rule);
+    background: rgba(255, 90, 95, 0.03);
+    border-radius: 2px;
+    position: relative;
+  }
+  .critique::before {
+    content: 'REVIEWER\'S LENS';
+    position: absolute;
+    top: -10px;
+    left: 24px;
+    background: var(--ink);
+    padding: 0 12px;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--crimson);
+  }
+  .critique h4 {
+    font-family: var(--display);
+    font-style: italic;
+    font-weight: 400;
+    font-size: 22px;
+    margin-bottom: 18px;
+    color: var(--paper);
+    letter-spacing: -0.01em;
+  }
+  .critique ul {
+    list-style: none;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px 40px;
+  }
+  .critique li {
+    font-size: 13.5px;
+    color: var(--paper-dim);
+    line-height: 1.6;
+    padding-left: 20px;
+    position: relative;
+  }
+  .critique li::before {
+    content: counter(item, decimal-leading-zero);
+    counter-increment: item;
+    position: absolute;
+    left: 0; top: 2px;
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--crimson);
+    letter-spacing: 0.05em;
+  }
+  .critique ul { counter-reset: item; }
+
+  /* ============ FOOTER ============ */
+  .foot {
+    margin-top: 80px;
+    padding-top: 24px;
+    border-top: 1px solid var(--rule);
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* ============ II. PRECISION ENGINEERING ============ */
+  .prec-hero {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 24px;
+    margin-bottom: 24px;
+  }
+  .prec-insight {
+    background: var(--ink-2);
+    border: 1px solid var(--rule);
+    padding: 32px;
+    border-radius: 2px;
+    position: relative;
+  }
+  .prec-insight .tag {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 14px;
+  }
+  .prec-insight h3 {
+    font-family: var(--display);
+    font-weight: 400;
+    font-size: 26px;
+    line-height: 1.15;
+    margin-bottom: 14px;
+    letter-spacing: -0.01em;
+  }
+  .prec-insight h3 em {
+    font-style: italic;
+    color: var(--amber);
+  }
+  .prec-insight p {
+    font-size: 14px;
+    color: var(--paper-dim);
+    line-height: 1.6;
+  }
+  .prec-insight p + p { margin-top: 12px; }
+
+  /* Bit pattern visualization */
+  .bit-diagram {
+    margin-top: 22px;
+    padding-top: 20px;
+    border-top: 1px dashed var(--rule);
+  }
+  .bit-row {
+    display: grid;
+    grid-template-columns: 70px 1fr;
+    gap: 16px;
+    align-items: center;
+    margin-bottom: 12px;
+    font-family: var(--mono);
+    font-size: 10px;
+  }
+  .bit-row .bit-label {
+    color: var(--muted);
+    letter-spacing: 0.08em;
+  }
+  .bit-row .bit-cells {
+    display: flex;
+    gap: 3px;
+  }
+  .bit-cell {
+    width: 22px;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 9px;
+    font-weight: 600;
+    border-radius: 2px;
+    letter-spacing: 0.05em;
+  }
+  .bit-sign  { background: rgba(122, 131, 151, 0.25); color: var(--muted); border: 1px solid rgba(122, 131, 151, 0.35); }
+  .bit-exp   { background: rgba(255, 179, 71, 0.18); color: var(--amber); border: 1px solid rgba(255, 179, 71, 0.4); }
+  .bit-mant  { background: rgba(94, 226, 213, 0.12); color: var(--cyan); border: 1px solid rgba(94, 226, 213, 0.3); }
+  .bit-gain  { background: linear-gradient(135deg, rgba(255, 179, 71, 0.5), rgba(255, 179, 71, 0.2)); color: var(--amber); border: 1px solid var(--amber); animation: bit-pulse 2s ease-in-out infinite; }
+  @keyframes bit-pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(255, 179, 71, 0.4); }
+    50% { box-shadow: 0 0 0 4px rgba(255, 179, 71, 0); }
+  }
+
+  .bit-legend {
+    display: flex;
+    gap: 20px;
+    margin-top: 14px;
+    font-family: var(--mono);
+    font-size: 9.5px;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+  }
+  .bit-legend span {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .bit-legend .sw {
+    width: 10px; height: 10px;
+    border-radius: 2px;
+  }
+
+  /* Precision map: components → precision */
+  .prec-map {
+    background: var(--ink-2);
+    border: 1px solid var(--rule);
+    padding: 28px 32px;
+    border-radius: 2px;
+  }
+  .prec-map-title {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 22px;
+  }
+  .prec-row-map {
+    display: grid;
+    grid-template-columns: 1fr 78px;
+    align-items: center;
+    padding: 13px 0;
+    border-bottom: 1px dashed var(--rule);
+    gap: 16px;
+  }
+  .prec-row-map:last-child { border-bottom: none; }
+  .prec-component {
+    font-family: var(--sans);
+    font-size: 13px;
+    color: var(--paper);
+  }
+  .prec-component .csub {
+    display: block;
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--muted);
+    margin-top: 2px;
+    letter-spacing: 0.04em;
+  }
+  .prec-chip {
+    padding: 5px 10px;
+    border-radius: 2px;
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-align: center;
+  }
+  .chip-fp4  { background: rgba(255, 179, 71, 0.15); color: var(--amber); border: 1px solid rgba(255, 179, 71, 0.4); }
+  .chip-fp8  { background: rgba(94, 226, 213, 0.12); color: var(--cyan); border: 1px solid rgba(94, 226, 213, 0.35); }
+  .chip-bf16 { background: rgba(61, 110, 255, 0.15); color: var(--accent-soft); border: 1px solid rgba(61, 110, 255, 0.35); }
+  .chip-fp32 { background: rgba(201, 120, 184, 0.12); color: #e2a8d6; border: 1px solid rgba(201, 120, 184, 0.35); }
+
+  .prec-impact {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: 24px;
+  }
+  .prec-impact-card {
+    background: var(--ink-2);
+    border: 1px solid var(--rule);
+    padding: 24px;
+    border-radius: 2px;
+    position: relative;
+  }
+  .prec-impact-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 30px; height: 2px;
+    background: var(--amber);
+  }
+  .prec-impact-card .pi-val {
+    font-family: var(--display);
+    font-weight: 300;
+    font-size: 38px;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    color: var(--amber);
+    margin-bottom: 6px;
+  }
+  .prec-impact-card .pi-val em {
+    font-style: italic;
+    font-size: 26px;
+    color: var(--cyan);
+  }
+  .prec-impact-card .pi-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 10px;
+  }
+  .prec-impact-card .pi-body {
+    font-size: 12.5px;
+    color: var(--paper-dim);
+    line-height: 1.55;
+  }
+
+  /* ============ ANIMATIONS ============ */
+  .reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: reveal 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+  }
+  .reveal-1 { animation-delay: 0.05s; }
+  .reveal-2 { animation-delay: 0.15s; }
+  .reveal-3 { animation-delay: 0.25s; }
+  .reveal-4 { animation-delay: 0.35s; }
+  .reveal-5 { animation-delay: 0.45s; }
+  .reveal-6 { animation-delay: 0.55s; }
+  @keyframes reveal {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ============ RESPONSIVE ============ */
+  @media (max-width: 980px) {
+    .wrap { padding: 32px 24px 80px; }
+    .hero { grid-template-columns: 1fr; gap: 32px; }
+    .hero-stats { border-left: none; padding-left: 0; border-top: 1px solid var(--rule); padding-top: 16px; }
+    .arch-grid { grid-template-columns: 1fr 1fr; }
+    .eff-grid { grid-template-columns: 1fr; }
+    .bench-grid { grid-template-columns: 1fr 1fr; }
+    .critique ul { grid-template-columns: 1fr; }
+    .sec-head { grid-template-columns: 60px 1fr; gap: 16px; }
+    .sec-title { font-size: 32px; }
+    .prec-hero { grid-template-columns: 1fr; }
+    .prec-impact { grid-template-columns: 1fr; }
+    .price-head, .price-row {
+      grid-template-columns: 1.8fr 1fr 1fr;
+      padding: 14px 18px;
+      font-size: 12px;
+    }
+    .price-head div:nth-child(3), .price-row .price-cell:nth-child(3),
+    .price-head div:nth-child(5), .price-row .price-cell:nth-child(5) { display: none; }
+  }
+  @media (max-width: 600px) {
+    .arch-grid { grid-template-columns: 1fr; }
+    .bench-grid { grid-template-columns: 1fr; }
+    .bar-row { grid-template-columns: 110px 1fr 80px; gap: 10px; font-size: 10.5px; }
+    .bit-cell { width: 18px; height: 18px; font-size: 8px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- META BAR -->
+  <div class="meta-bar reveal reveal-1">
+    <span><span class="dot"></span>Dossier — 04 · Preview Release</span>
+    <span>DeepSeek-AI · 2026</span>
+    <span>1 048 576 tokens · native</span>
+  </div>
+
+  <!-- HERO -->
+  <header class="hero">
+    <div>
+      <div class="hero-label reveal reveal-2">Technical Brief · Model Architecture</div>
+      <h1 class="hero-title reveal reveal-2">
+        Breaking the<br>
+        quadratic <em>barrier.</em>
+        <span class="v">V4</span>
+      </h1>
+      <p class="hero-sub reveal reveal-3">
+        A hybrid-attention MoE that renders million-token context <span style="color: var(--cyan);">routine</span>, not heroic — at an order of magnitude less compute per token than its predecessor.
+      </p>
+    </div>
+    <div class="hero-stats reveal reveal-4">
+      <div class="stat">
+        <div class="stat-label">Total Parameters · Pro</div>
+        <div class="stat-value">1.6<span class="unit">trillion</span></div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">Activated per Token · Pro</div>
+        <div class="stat-value">49<span class="unit">billion</span></div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">Native Context Window</div>
+        <div class="stat-value">1M<span class="unit">tokens</span></div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">Pre-training Corpus</div>
+        <div class="stat-value">33T<span class="unit">tokens</span></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============ I. ARCHITECTURE ============ -->
+  <section class="section">
+    <div class="sec-kicker">§ I</div>
+    <div class="sec-head">
+      <div class="sec-num">001 / 005</div>
+      <h2 class="sec-title">Four <em>architectural</em> levers, pulled together.</h2>
+    </div>
+
+    <div class="arch-grid">
+      <div class="arch-card">
+        <div class="tag">ATTN · SPARSE</div>
+        <h3><em>CSA</em><br>Compressed Sparse Attn.</h3>
+        <p>Compresses m=4 consecutive KV entries into one, then routes each query through a lightning indexer to the top-k most relevant blocks. DSA applied to the compressed layer.</p>
+        <div class="metric">top-k = <strong>1024</strong> (Pro) · <strong>512</strong> (Flash)</div>
+      </div>
+
+      <div class="arch-card">
+        <div class="tag">ATTN · DENSE</div>
+        <h3><em>HCA</em><br>Heavily Compressed Attn.</h3>
+        <p>Consolidates m′=128 KV entries per block, dense attention over the drastically shorter resulting sequence. Interleaved with CSA layer-by-layer.</p>
+        <div class="metric">compression ratio <strong>128×</strong> · no sparsity</div>
+      </div>
+
+      <div class="arch-card">
+        <div class="tag">RESIDUAL</div>
+        <h3><em>mHC</em><br>Manifold-Constrained HC.</h3>
+        <p>Projects the residual mixing matrix onto the Birkhoff polytope of doubly stochastic matrices via Sinkhorn-Knopp. Bounds spectral norm ≤ 1, stabilizes deep stacks.</p>
+        <div class="metric">expansion n<sub>hc</sub> = <strong>4</strong> · t<sub>max</sub> = 20</div>
+      </div>
+
+      <div class="arch-card">
+        <div class="tag">OPTIMIZER</div>
+        <h3><em>Muon</em><br>Hybrid Newton-Schulz.</h3>
+        <p>Orthogonalized momentum via two-stage Newton-Schulz (8 aggressive + 2 stabilizing). Faster convergence, better training stability. AdamW retained for embeddings & norms.</p>
+        <div class="metric">8 steps (3.44, −4.78, 2.03) → 2 steps (2, −1.5, 0.5)</div>
+      </div>
+    </div>
+
+    <!-- SVG ATTENTION DIAGRAM -->
+    <div class="attn-diagram">
+      <div class="attn-diagram-title">Fig. 1 · V4-Pro layer stack — CSA / HCA interleaving with mHC residual mixing</div>
+      <svg viewBox="0 0 1100 260" width="100%" style="display:block; margin-top: 8px;">
+        <defs>
+          <linearGradient id="csa-grad" x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0" stop-color="#5ee2d5" stop-opacity="0.85"/>
+            <stop offset="1" stop-color="#5ee2d5" stop-opacity="0.35"/>
+          </linearGradient>
+          <linearGradient id="hca-grad" x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0" stop-color="#3d6eff" stop-opacity="0.85"/>
+            <stop offset="1" stop-color="#3d6eff" stop-opacity="0.35"/>
+          </linearGradient>
+          <linearGradient id="mhc-grad" x1="0" x2="1">
+            <stop offset="0" stop-color="#ffb347" stop-opacity="0"/>
+            <stop offset="0.5" stop-color="#ffb347" stop-opacity="0.6"/>
+            <stop offset="1" stop-color="#ffb347" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+
+        <!-- Top row: sequence length evolution -->
+        <g transform="translate(40, 22)">
+          <text x="0" y="0" fill="#7a8397" font-family="JetBrains Mono, monospace" font-size="9" letter-spacing="1.5">EFFECTIVE SEQUENCE LENGTH AFTER COMPRESSION</text>
+        </g>
+
+        <!-- Layer blocks: HCA (×2 initial), then interleaved CSA/HCA -->
+        <!-- Layer 1: HCA -->
+        <g transform="translate(40, 70)">
+          <rect x="0" y="0" width="90" height="100" rx="2" fill="url(#hca-grad)" stroke="#3d6eff" stroke-width="0.6"/>
+          <text x="45" y="22" fill="#f5efe4" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" font-weight="700" letter-spacing="1.5">LAYER 1</text>
+          <text x="45" y="44" fill="#f5efe4" text-anchor="middle" font-family="Manrope" font-size="11" font-weight="600">HCA</text>
+          <text x="45" y="62" fill="#f5efe4" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" opacity="0.85">m′=128</text>
+          <text x="45" y="82" fill="#f5efe4" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8" opacity="0.7">dense</text>
+        </g>
+
+        <!-- Layer 2: HCA -->
+        <g transform="translate(140, 70)">
+          <rect x="0" y="0" width="90" height="100" rx="2" fill="url(#hca-grad)" stroke="#3d6eff" stroke-width="0.6"/>
+          <text x="45" y="22" fill="#f5efe4" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" font-weight="700" letter-spacing="1.5">LAYER 2</text>
+          <text x="45" y="44" fill="#f5efe4" text-anchor="middle" font-family="Manrope" font-size="11" font-weight="600">HCA</text>
+          <text x="45" y="62" fill="#f5efe4" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" opacity="0.85">m′=128</text>
+          <text x="45" y="82" fill="#f5efe4" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8" opacity="0.7">dense</text>
+        </g>
+
+        <!-- Layer 3: CSA -->
+        <g transform="translate(240, 70)">
+          <rect x="0" y="0" width="90" height="100" rx="2" fill="url(#csa-grad)" stroke="#5ee2d5" stroke-width="0.6"/>
+          <text x="45" y="22" fill="#0a0e17" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" font-weight="700" letter-spacing="1.5">LAYER 3</text>
+          <text x="45" y="44" fill="#0a0e17" text-anchor="middle" font-family="Manrope" font-size="11" font-weight="600">CSA</text>
+          <text x="45" y="62" fill="#0a0e17" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" opacity="0.85">m=4 · top-k</text>
+          <text x="45" y="82" fill="#0a0e17" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8" opacity="0.7">sparse</text>
+        </g>
+
+        <!-- Layer 4: HCA -->
+        <g transform="translate(340, 70)">
+          <rect x="0" y="0" width="90" height="100" rx="2" fill="url(#hca-grad)" stroke="#3d6eff" stroke-width="0.6"/>
+          <text x="45" y="22" fill="#f5efe4" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" font-weight="700" letter-spacing="1.5">LAYER 4</text>
+          <text x="45" y="44" fill="#f5efe4" text-anchor="middle" font-family="Manrope" font-size="11" font-weight="600">HCA</text>
+          <text x="45" y="62" fill="#f5efe4" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" opacity="0.85">m′=128</text>
+          <text x="45" y="82" fill="#f5efe4" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8" opacity="0.7">dense</text>
+        </g>
+
+        <!-- Layer 5: CSA -->
+        <g transform="translate(440, 70)">
+          <rect x="0" y="0" width="90" height="100" rx="2" fill="url(#csa-grad)" stroke="#5ee2d5" stroke-width="0.6"/>
+          <text x="45" y="22" fill="#0a0e17" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" font-weight="700" letter-spacing="1.5">LAYER 5</text>
+          <text x="45" y="44" fill="#0a0e17" text-anchor="middle" font-family="Manrope" font-size="11" font-weight="600">CSA</text>
+          <text x="45" y="62" fill="#0a0e17" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" opacity="0.85">m=4 · top-k</text>
+          <text x="45" y="82" fill="#0a0e17" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8" opacity="0.7">sparse</text>
+        </g>
+
+        <!-- Ellipsis -->
+        <g transform="translate(540, 70)">
+          <text x="45" y="56" fill="#7a8397" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="18" letter-spacing="6">· · ·</text>
+          <text x="45" y="82" fill="#7a8397" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8" letter-spacing="1.5" opacity="0.7">interleaved</text>
+        </g>
+
+        <!-- Layer L-1: CSA -->
+        <g transform="translate(640, 70)">
+          <rect x="0" y="0" width="90" height="100" rx="2" fill="url(#csa-grad)" stroke="#5ee2d5" stroke-width="0.6"/>
+          <text x="45" y="22" fill="#0a0e17" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" font-weight="700" letter-spacing="1.5">LAYER L−1</text>
+          <text x="45" y="44" fill="#0a0e17" text-anchor="middle" font-family="Manrope" font-size="11" font-weight="600">CSA</text>
+          <text x="45" y="62" fill="#0a0e17" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" opacity="0.85">m=4 · top-k</text>
+          <text x="45" y="82" fill="#0a0e17" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8" opacity="0.7">sparse</text>
+        </g>
+
+        <!-- Layer L: HCA -->
+        <g transform="translate(740, 70)">
+          <rect x="0" y="0" width="90" height="100" rx="2" fill="url(#hca-grad)" stroke="#3d6eff" stroke-width="0.6"/>
+          <text x="45" y="22" fill="#f5efe4" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" font-weight="700" letter-spacing="1.5">LAYER L</text>
+          <text x="45" y="44" fill="#f5efe4" text-anchor="middle" font-family="Manrope" font-size="11" font-weight="600">HCA</text>
+          <text x="45" y="62" fill="#f5efe4" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" opacity="0.85">m′=128</text>
+          <text x="45" y="82" fill="#f5efe4" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8" opacity="0.7">dense</text>
+        </g>
+
+        <!-- Totals panel -->
+        <g transform="translate(860, 70)">
+          <rect x="0" y="0" width="200" height="100" rx="2" fill="none" stroke="#7a8397" stroke-width="0.6" stroke-dasharray="3,3"/>
+          <text x="100" y="22" fill="#f5efe4" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" font-weight="700" letter-spacing="1.5">TOTAL DEPTH</text>
+          <text x="100" y="48" fill="#5ee2d5" text-anchor="middle" font-family="Fraunces, serif" font-size="22" font-weight="400">61 layers</text>
+          <text x="100" y="64" fill="#7a8397" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" opacity="0.8">Pro · d = 7168</text>
+          <text x="100" y="82" fill="#c8c1b4" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" opacity="0.8">43 layers · Flash</text>
+        </g>
+
+        <!-- mHC residual stream underneath -->
+        <path d="M 40 210 L 1060 210" stroke="url(#mhc-grad)" stroke-width="2" fill="none"/>
+        <g transform="translate(40, 198)">
+          <text x="0" y="0" fill="#ffb347" font-family="JetBrains Mono, monospace" font-size="9" letter-spacing="1.5" font-weight="600">mHC RESIDUAL STREAM · n_hc = 4 · B ∈ Birkhoff polytope</text>
+          <text x="0" y="30" fill="#7a8397" font-family="JetBrains Mono, monospace" font-size="9" opacity="0.8">doubly-stochastic residual mixing, Sinkhorn-Knopp (t_max = 20) · spectral norm ≤ 1</text>
+        </g>
+
+        <!-- connecting residual dots under each layer -->
+        <g fill="#ffb347" opacity="0.8">
+          <circle cx="85"  cy="210" r="2.5"/>
+          <circle cx="185" cy="210" r="2.5"/>
+          <circle cx="285" cy="210" r="2.5"/>
+          <circle cx="385" cy="210" r="2.5"/>
+          <circle cx="485" cy="210" r="2.5"/>
+          <circle cx="685" cy="210" r="2.5"/>
+          <circle cx="785" cy="210" r="2.5"/>
+        </g>
+        <g stroke="#ffb347" stroke-width="0.8" opacity="0.5" fill="none">
+          <line x1="85"  y1="170" x2="85"  y2="208"/>
+          <line x1="185" y1="170" x2="185" y2="208"/>
+          <line x1="285" y1="170" x2="285" y2="208"/>
+          <line x1="385" y1="170" x2="385" y2="208"/>
+          <line x1="485" y1="170" x2="485" y2="208"/>
+          <line x1="685" y1="170" x2="685" y2="208"/>
+          <line x1="785" y1="170" x2="785" y2="208"/>
+        </g>
+      </svg>
+    </div>
+  </section>
+
+  <!-- ============ II. PRECISION ENGINEERING ============ -->
+  <section class="section">
+    <div class="sec-kicker">§ II</div>
+    <div class="sec-head">
+      <div class="sec-num">002 / 005</div>
+      <h2 class="sec-title">Precision as an <em>architectural</em> lever.</h2>
+    </div>
+
+    <div class="prec-hero">
+      <!-- Bit-pattern insight -->
+      <div class="prec-insight">
+        <div class="tag">THE LOSSLESS TRICK</div>
+        <h3>FP4 expert weights, dequantized to FP8 — <em>without loss.</em></h3>
+        <p>MXFP4 (E2M1) has 2 fewer exponent bits than FP8 E4M3. The dynamic-range headroom in FP8 is exactly wide enough to absorb the per-sub-block (1×32) scale factors inside each 128×128 FP8 quantization tile, provided max/min scales stay below a bounded ratio — a condition DeepSeek empirically verifies on learned weights.</p>
+        <p style="color: var(--paper);">The consequence: the entire QAT pipeline reuses the existing FP8 framework unchanged. Gradients flow to FP32 masters via straight-through estimator. No re-quantization of transposed weights, no backward rewriting.</p>
+
+        <div class="bit-diagram">
+          <div class="bit-row">
+            <span class="bit-label">FP4·E2M1</span>
+            <div class="bit-cells">
+              <div class="bit-cell bit-sign">S</div>
+              <div class="bit-cell bit-exp">E</div>
+              <div class="bit-cell bit-exp">E</div>
+              <div class="bit-cell bit-mant">M</div>
+            </div>
+          </div>
+          <div class="bit-row">
+            <span class="bit-label">FP8·E4M3</span>
+            <div class="bit-cells">
+              <div class="bit-cell bit-sign">S</div>
+              <div class="bit-cell bit-exp">E</div>
+              <div class="bit-cell bit-exp">E</div>
+              <div class="bit-cell bit-gain">+E</div>
+              <div class="bit-cell bit-gain">+E</div>
+              <div class="bit-cell bit-mant">M</div>
+              <div class="bit-cell bit-mant">M</div>
+              <div class="bit-cell bit-mant">M</div>
+            </div>
+          </div>
+          <div class="bit-legend">
+            <span><span class="sw" style="background: rgba(122,131,151,0.25); border: 1px solid rgba(122,131,151,0.35);"></span>sign</span>
+            <span><span class="sw" style="background: rgba(255,179,71,0.18); border: 1px solid rgba(255,179,71,0.4);"></span>exponent</span>
+            <span><span class="sw" style="background: rgba(94,226,213,0.12); border: 1px solid rgba(94,226,213,0.3);"></span>mantissa</span>
+            <span style="color: var(--amber);">→ +2 exp bits = scale-factor headroom</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Precision map -->
+      <div class="prec-map">
+        <div class="prec-map-title">Precision, by component</div>
+
+        <div class="prec-row-map">
+          <div class="prec-component">MoE expert weights<span class="csub">GPU memory dominator</span></div>
+          <div class="prec-chip chip-fp4">FP4</div>
+        </div>
+        <div class="prec-row-map">
+          <div class="prec-component">Indexer QK path (CSA)<span class="csub">attention score compute</span></div>
+          <div class="prec-chip chip-fp4">FP4</div>
+        </div>
+        <div class="prec-row-map">
+          <div class="prec-component">Dense GEMMs (non-MoE)<span class="csub">forward + backward</span></div>
+          <div class="prec-chip chip-fp8">FP8</div>
+        </div>
+        <div class="prec-row-map">
+          <div class="prec-component">KV cache · RoPE dims<span class="csub">rotary positional</span></div>
+          <div class="prec-chip chip-bf16">BF16</div>
+        </div>
+        <div class="prec-row-map">
+          <div class="prec-component">KV cache · remaining dims<span class="csub">~½ cache reduction vs pure BF16</span></div>
+          <div class="prec-chip chip-fp8">FP8</div>
+        </div>
+        <div class="prec-row-map">
+          <div class="prec-component">Index scores I<sub>t,s</sub><span class="csub">was FP32, 2× top-k speedup</span></div>
+          <div class="prec-chip chip-bf16">BF16</div>
+        </div>
+        <div class="prec-row-map">
+          <div class="prec-component">Muon MoE grad sync<span class="csub">stochastic rounding, all-to-all</span></div>
+          <div class="prec-chip chip-bf16">BF16</div>
+        </div>
+        <div class="prec-row-map">
+          <div class="prec-component">Master weights, local sums<span class="csub">optimizer state</span></div>
+          <div class="prec-chip chip-fp32">FP32</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Impact metrics -->
+    <div class="prec-impact">
+      <div class="prec-impact-card">
+        <div class="pi-label">Top-k selector speedup</div>
+        <div class="pi-val"><em>2</em>×</div>
+        <div class="pi-body">Quantizing index scores from FP32 to BF16 doubles selector throughput at <span style="color: var(--cyan);">99.7% KV-entry recall retention</span>.</div>
+      </div>
+      <div class="prec-impact-card">
+        <div class="pi-label">Inference weights, real FP4</div>
+        <div class="pi-val">native</div>
+        <div class="pi-body">Rollout and serving use <em style="color: var(--amber); font-style: normal;">real</em> FP4 weights — not simulated QAT — ensuring sampling distribution matches deployment exactly.</div>
+      </div>
+      <div class="prec-impact-card">
+        <div class="pi-label">Theoretical FP4 × FP8</div>
+        <div class="pi-val"><em>+∞</em></div>
+        <div class="pi-body">Current HW peak = FP8 × FP8, but future accelerators can extract <span style="color: var(--cyan);">~33% more throughput</span> from the FP4 operand without any model change.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ III. EFFICIENCY ============ -->
+  <section class="section">
+    <div class="sec-kicker">§ III</div>
+    <div class="sec-head">
+      <div class="sec-num">003 / 005</div>
+      <h2 class="sec-title">The <em>efficiency</em> dividend, at 1M context.</h2>
+    </div>
+
+    <div class="eff-grid">
+      <div class="eff-chart">
+        <h4>Single-token inference FLOPs</h4>
+        <div class="eff-sub">relative, @ token position 1024K</div>
+
+        <div class="bar-row">
+          <span class="bar-label">V3.2 baseline</span>
+          <div class="bar-track"><div class="bar-fill v32" style="width: 100%"></div></div>
+          <div class="bar-value">1.18 T<span class="reduction">1.00×</span></div>
+        </div>
+        <div class="bar-row">
+          <span class="bar-label">V4-Pro</span>
+          <div class="bar-track"><div class="bar-fill v4pro" style="width: 27%"></div></div>
+          <div class="bar-value">0.32 T<span class="reduction">−3.7×</span></div>
+        </div>
+        <div class="bar-row">
+          <span class="bar-label">V4-Flash</span>
+          <div class="bar-track"><div class="bar-fill v4flash" style="width: 10.2%"></div></div>
+          <div class="bar-value">0.12 T<span class="reduction">−9.8×</span></div>
+        </div>
+
+        <div style="margin-top: 20px; padding-top: 16px; border-top: 1px dashed var(--rule); font-family: var(--mono); font-size: 11px; color: var(--muted); line-height: 1.6;">
+          FP8-equivalent. Peak FP4×FP8 identical to FP8×FP8 on current HW; theoretical 1.33× headroom on future accelerators.
+        </div>
+      </div>
+
+      <div class="eff-chart">
+        <h4>Accumulated KV cache</h4>
+        <div class="eff-sub">@ sequence length 1024K</div>
+
+        <div class="bar-row">
+          <span class="bar-label">V3.2 baseline</span>
+          <div class="bar-track"><div class="bar-fill v32" style="width: 100%"></div></div>
+          <div class="bar-value">48 GB<span class="reduction">1.00×</span></div>
+        </div>
+        <div class="bar-row">
+          <span class="bar-label">V4-Pro</span>
+          <div class="bar-track"><div class="bar-fill v4pro" style="width: 10.5%"></div></div>
+          <div class="bar-value">5.0 GB<span class="reduction">−9.5×</span></div>
+        </div>
+        <div class="bar-row">
+          <span class="bar-label">V4-Flash</span>
+          <div class="bar-track"><div class="bar-fill v4flash" style="width: 7.3%"></div></div>
+          <div class="bar-value">3.5 GB<span class="reduction">−13.7×</span></div>
+        </div>
+
+        <div style="margin-top: 20px; padding-top: 16px; border-top: 1px dashed var(--rule); font-family: var(--mono); font-size: 11px; color: var(--muted); line-height: 1.6;">
+          Mixed storage: BF16 for RoPE dims, FP8 for remainder. ≈ 2% of BF16 GQA-8 baseline.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ IV. BENCHMARKS ============ -->
+  <section class="section">
+    <div class="sec-kicker">§ IV</div>
+    <div class="sec-head">
+      <div class="sec-num">004 / 005</div>
+      <h2 class="sec-title">Where V4-Pro-Max <em>lands</em> on the frontier.</h2>
+    </div>
+
+    <div class="bench-wrap">
+      <div class="bench-legend">
+        <span><span class="legend-dot ld-ds"></span>DeepSeek V4-Pro-Max</span>
+        <span><span class="legend-dot ld-opus"></span>Claude Opus 4.6-Max</span>
+        <span><span class="legend-dot ld-gpt"></span>GPT-5.4-xHigh</span>
+        <span><span class="legend-dot ld-gem"></span>Gemini 3.1-Pro-High</span>
+      </div>
+
+      <div class="bench-grid">
+        <!-- SimpleQA Verified -->
+        <div class="bench-block">
+          <div class="bench-name">SimpleQA Verified · Pass@1</div>
+          <div class="bench-bars">
+            <div class="b-bar ds"   style="height: 77%"><span class="b-val">57.9</span></div>
+            <div class="b-bar opus" style="height: 61%"><span class="b-val">46.2</span></div>
+            <div class="b-bar gpt"  style="height: 60%"><span class="b-val">45.3</span></div>
+            <div class="b-bar gem"  style="height: 100%"><span class="b-val">75.6</span></div>
+          </div>
+        </div>
+
+        <!-- HLE -->
+        <div class="bench-block">
+          <div class="bench-name">Humanity's Last Exam</div>
+          <div class="bench-bars">
+            <div class="b-bar ds"   style="height: 85%"><span class="b-val">37.7</span></div>
+            <div class="b-bar opus" style="height: 90%"><span class="b-val">40.0</span></div>
+            <div class="b-bar gpt"  style="height: 90%"><span class="b-val">39.8</span></div>
+            <div class="b-bar gem"  style="height: 100%"><span class="b-val">44.4</span></div>
+          </div>
+        </div>
+
+        <!-- Apex Shortlist -->
+        <div class="bench-block">
+          <div class="bench-name">Apex Shortlist · Pass@1</div>
+          <div class="bench-bars">
+            <div class="b-bar ds"   style="height: 100%"><span class="b-val">90.2</span></div>
+            <div class="b-bar opus" style="height: 95%"><span class="b-val">85.9</span></div>
+            <div class="b-bar gpt"  style="height: 87%"><span class="b-val">78.1</span></div>
+            <div class="b-bar gem"  style="height: 99%"><span class="b-val">89.1</span></div>
+          </div>
+        </div>
+
+        <!-- Codeforces -->
+        <div class="bench-block">
+          <div class="bench-name">Codeforces · Rating</div>
+          <div class="bench-bars">
+            <div class="b-bar ds"   style="height: 100%"><span class="b-val">3206</span></div>
+            <div class="b-bar opus" style="height: 0%"><span class="b-val">—</span></div>
+            <div class="b-bar gpt"  style="height: 99%"><span class="b-val">3168</span></div>
+            <div class="b-bar gem"  style="height: 95%"><span class="b-val">3052</span></div>
+          </div>
+        </div>
+
+        <!-- SWE Verified -->
+        <div class="bench-block">
+          <div class="bench-name">SWE-Verified · Resolved</div>
+          <div class="bench-bars">
+            <div class="b-bar ds"   style="height: 100%"><span class="b-val">80.6</span></div>
+            <div class="b-bar opus" style="height: 100%"><span class="b-val">80.8</span></div>
+            <div class="b-bar gpt"  style="height: 0%"><span class="b-val">—</span></div>
+            <div class="b-bar gem"  style="height: 100%"><span class="b-val">80.6</span></div>
+          </div>
+        </div>
+
+        <!-- Terminal Bench -->
+        <div class="bench-block">
+          <div class="bench-name">Terminal Bench 2.0 · Acc</div>
+          <div class="bench-bars">
+            <div class="b-bar ds"   style="height: 90%"><span class="b-val">67.9</span></div>
+            <div class="b-bar opus" style="height: 87%"><span class="b-val">65.4</span></div>
+            <div class="b-bar gpt"  style="height: 100%"><span class="b-val">75.1</span></div>
+            <div class="b-bar gem"  style="height: 91%"><span class="b-val">68.5</span></div>
+          </div>
+        </div>
+
+        <!-- Toolathlon -->
+        <div class="bench-block">
+          <div class="bench-name">Toolathlon · Pass@1</div>
+          <div class="bench-bars">
+            <div class="b-bar ds"   style="height: 95%"><span class="b-val">51.8</span></div>
+            <div class="b-bar opus" style="height: 86%"><span class="b-val">47.2</span></div>
+            <div class="b-bar gpt"  style="height: 100%"><span class="b-val">54.6</span></div>
+            <div class="b-bar gem"  style="height: 89%"><span class="b-val">48.8</span></div>
+          </div>
+        </div>
+
+        <!-- Long MRCR 1M -->
+        <div class="bench-block">
+          <div class="bench-name">MRCR 1M · MMR</div>
+          <div class="bench-bars">
+            <div class="b-bar ds"   style="height: 90%"><span class="b-val">83.5</span></div>
+            <div class="b-bar opus" style="height: 100%"><span class="b-val">92.9</span></div>
+            <div class="b-bar gpt"  style="height: 0%"><span class="b-val">—</span></div>
+            <div class="b-bar gem"  style="height: 82%"><span class="b-val">76.3</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ V. PRICING ============ -->
+  <section class="section">
+    <div class="sec-kicker">§ V</div>
+    <div class="sec-head">
+      <div class="sec-num">005 / 005</div>
+      <h2 class="sec-title">The <em>economics</em> — a frontier, re-priced.</h2>
+    </div>
+
+    <div class="price-table">
+      <div class="price-head">
+        <div>Model · Parameters</div>
+        <div>Cached In</div>
+        <div>Uncached In</div>
+        <div>Output</div>
+        <div>Currency</div>
+      </div>
+
+      <div class="price-row featured">
+        <div class="price-model"><em>DeepSeek V4 Flash</em><span class="params">284B total · 13B active</span></div>
+        <div class="price-cell cheap"><span class="cur">¥</span>0.2</div>
+        <div class="price-cell cheap"><span class="cur">¥</span>1</div>
+        <div class="price-cell cheap"><span class="cur">¥</span>2</div>
+        <div class="price-cell" style="color:var(--muted); font-size:11px;">RMB / M tok</div>
+      </div>
+
+      <div class="price-row">
+        <div class="price-model">Hunyuan Hy3 preview · 0–16K<span class="params">295B</span></div>
+        <div class="price-cell"><span class="cur">¥</span>0.4</div>
+        <div class="price-cell"><span class="cur">¥</span>1.2</div>
+        <div class="price-cell"><span class="cur">¥</span>4</div>
+        <div class="price-cell" style="color:var(--muted); font-size:11px;">RMB / M tok</div>
+      </div>
+
+      <div class="price-row">
+        <div class="price-model">GLM-5.1 · 0–32K<span class="params">744B</span></div>
+        <div class="price-cell"><span class="cur">¥</span>1.3</div>
+        <div class="price-cell"><span class="cur">¥</span>6</div>
+        <div class="price-cell"><span class="cur">¥</span>24</div>
+        <div class="price-cell" style="color:var(--muted); font-size:11px;">RMB / M tok</div>
+      </div>
+
+      <div class="price-row">
+        <div class="price-model">Kimi K2.6<span class="params">1T</span></div>
+        <div class="price-cell"><span class="cur">¥</span>1.1</div>
+        <div class="price-cell"><span class="cur">¥</span>6.5</div>
+        <div class="price-cell"><span class="cur">¥</span>27</div>
+        <div class="price-cell" style="color:var(--muted); font-size:11px;">RMB / M tok</div>
+      </div>
+
+      <div class="price-row featured">
+        <div class="price-model"><em>DeepSeek V4 Pro</em><span class="params">1.6T total · 49B active</span></div>
+        <div class="price-cell cheap"><span class="cur">¥</span>1</div>
+        <div class="price-cell cheap"><span class="cur">¥</span>12</div>
+        <div class="price-cell cheap"><span class="cur">¥</span>24</div>
+        <div class="price-cell" style="color:var(--muted); font-size:11px;">RMB / M tok</div>
+      </div>
+
+      <div class="price-row">
+        <div class="price-model">Claude Opus 4.7<span class="params">undisclosed</span></div>
+        <div class="price-cell expensive"><span class="cur">$</span>0.5</div>
+        <div class="price-cell expensive"><span class="cur">$</span>5</div>
+        <div class="price-cell expensive"><span class="cur">$</span>25</div>
+        <div class="price-cell" style="color:var(--muted); font-size:11px;">USD / M tok</div>
+      </div>
+
+      <div class="price-row">
+        <div class="price-model">GPT-5.5<span class="params">undisclosed</span></div>
+        <div class="price-cell expensive"><span class="cur">$</span>0.5</div>
+        <div class="price-cell expensive"><span class="cur">$</span>5</div>
+        <div class="price-cell expensive"><span class="cur">$</span>30</div>
+        <div class="price-cell" style="color:var(--muted); font-size:11px;">USD / M tok</div>
+      </div>
+    </div>
+
+    <div style="margin-top: 20px; font-family: var(--mono); font-size: 11px; color: var(--muted); letter-spacing: 0.05em; line-height: 1.7;">
+      At 7.2 RMB/USD, V4-Pro output ≈ <span style="color:var(--cyan);">$3.33 / M tok</span> — one-seventh of Opus 4.7, one-ninth of GPT-5.5 — for a 1.6T model, natively 1M-context. The arbitrage case for open-weight Chinese frontier models gets quantitatively harder to ignore.
+    </div>
+  </section>
+
+  <!-- ============ CRITIQUE ============ -->
+  <section class="critique">
+    <h4>What a careful reviewer should still ask.</h4>
+    <ul>
+      <li>Efficiency baselines are vs. V3.2 (already DSA-based), not vanilla GQA-8. Honest anchoring matters — the 2%-of-baseline figure is the one a systems paper should lead with.</li>
+      <li>The "3–6 month behind frontier" trajectory is self-characterized. The SimpleQA-Verified gap (57.9 vs. 75.6) implies the factuality deficit scales more steeply than the reasoning gap closes.</li>
+      <li>Retrieval fidelity drops with context length across <em>all</em> tested models at 1M (V4-Pro MRCR: 0.94 @ 32K → 0.59 @ 1024K). This is a property of the evaluation regime, not V4 specifically — "native 1M" describes architectural feasibility, and downstream use at extreme lengths needs length-aware calibration regardless of model.</li>
+      <li>Anticipatory Routing and SwiGLU clamping are empirically necessary, mechanistically unexplained. The authors flag this; it warrants a dedicated stability study.</li>
+      <li>Agentic evaluations use an internal harness (500 steps, 512K ctx). Cross-harness reproducibility with Terminal-Bench 2.0 Verified should be verified independently.</li>
+      <li>The Chinese-writing win-rate of 62.7% vs. Gemini is partly attributed to Gemini's "stylistic preferences overriding user requirements" — a judgment call reviewers should audit.</li>
+    </ul>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="foot">
+    <span>Source · DeepSeek-AI · <em style="font-family: var(--display); font-style: italic;">DeepSeek-V4: Towards Highly Efficient Million-Token Context Intelligence</em></span>
+    <span>Compiled · April 2026</span>
+  </footer>
+
+</div>
+</body>
+</html>
