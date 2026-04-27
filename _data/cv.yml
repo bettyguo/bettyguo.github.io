@@ -49,43 +49,56 @@ cv:
           - "Building scalable ML pipelines for production deployment"
 
       - company: Brain Investing Limited
+        position: AI Researcher
+        url: https://www.brainvestai.com/
+        start_date: 2023-06-01
+        end_date: ""
+        highlights:
+          - "LLM pre-training and fine-tuning"
+
+      - company: Brain Investing Limited
         position: Partner, AI Quantitative Trading
         location: Hong Kong SAR
         url: https://www.brainvestai.com/
         start_date: 2023-01-01
-        end_date: ""
+        end_date: 2023-05-31
         summary: Leading AI-driven investment strategies and LLM-powered portfolio management.
         highlights:
           - "Spearheading Athena™ — Hong Kong's first LLM-powered portfolio management platform"
-          - "AI quantitative trading strategy development and risk management"
+          - "Investment management and Large Language Model Operations (LLMOps)"
 
       - company: Brain Investing Limited
         position: Managing Director, AI Quantitative Trading
-        location: Hong Kong SAR
         url: https://www.brainvestai.com/
         start_date: 2020-10-01
         end_date: 2022-12-31
         highlights:
           - "Led AI/ML team for quantitative trading systems"
-          - "Managed high-performing teams and shipped production trading systems"
+          - "Investment management and applied artificial intelligence"
 
       - company: Brain Investing Limited
         position: Director, Quantitative Trading Researcher
         location: Hong Kong SAR
         start_date: 2018-12-01
         end_date: 2020-09-30
+        highlights:
+          - "Investment management"
 
       - company: Brain Investing Limited
         position: Senior Associate, Quantitative Researcher
         location: Hong Kong SAR
         start_date: 2017-06-01
         end_date: 2018-11-30
+        highlights:
+          - "Investment management"
 
       - company: The Aria Group Ltd
         position: Quantitative Trading Researcher
         location: Hong Kong SAR
         start_date: 2015-08-01
         end_date: 2017-05-31
+        highlights:
+          - "Investment management"
 
     Skills:
       - name: Research
